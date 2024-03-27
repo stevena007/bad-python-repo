@@ -1,5 +1,11 @@
-def insecure_eval(input_string):
-    return eval(input_string)
+import flask
 
-user_input = input("Enter a string: ")
-print(insecure_eval(user_input))
+app = flask.Flask(__name__)
+
+@app.route('/')
+def insecure():
+    expr = flask.request.args.get('expr')
+    return str(eval(expr))
+
+if __name__ == '__main__':
+    app.run(debug=True)
